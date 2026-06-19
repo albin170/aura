@@ -1,0 +1,6 @@
+{
+  "name": "Aura Personal AI",
+  "description": "Your intelligent, adaptive AI twin and daily assistant companion.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
