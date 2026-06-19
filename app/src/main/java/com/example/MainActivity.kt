@@ -77,37 +77,65 @@ fun AuraAppScreen(viewModel: AuraViewModel = viewModel()) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Surface(
-                            modifier = Modifier.size(10.dp),
-                            color = CyberSecondary,
-                            shape = CircleShape
-                        ) {}
-                        Spacer(modifier = Modifier.width(8.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(CyberBackground)
+                    .statusBarsPadding()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 14.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
                         Text(
-                            text = "AURA PERSONAL AI",
-                            fontFamily = FontFamily.SansSerif,
+                            text = "Aura Personal Assistant".uppercase(),
+                            color = CyberMuted,
+                            fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                            color = Color.White
+                            letterSpacing = 1.2.sp
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = "Good morning, Alex",
+                            color = CyberText,
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold
                         )
                     }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = CyberBackground
-                )
-            )
+                    Box(
+                        modifier = Modifier
+                            .size(46.dp)
+                            .background(Color(0xFFD6E3FF), CircleShape)
+                            .border(2.dp, Color.White, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .background(CyberPrimary, CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "A",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+                }
+            }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
             NavigationBar(
-                containerColor = CyberSurface,
-                modifier = Modifier.navigationBarsPadding()
+                containerColor = Color(0xFFF3F4F9),
+                modifier = Modifier.navigationBarsPadding(),
+                tonalElevation = 4.dp
             ) {
                 val tabs = listOf(
                     Triple("Assistant", Icons.Default.Chat, 0),
@@ -123,11 +151,11 @@ fun AuraAppScreen(viewModel: AuraViewModel = viewModel()) {
                         icon = { Icon(icon, contentDescription = label) },
                         label = { Text(label, fontSize = 11.sp, maxLines = 1) },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = CyberSecondary,
-                            selectedTextColor = CyberSecondary,
+                            selectedIconColor = Color.White,
+                            selectedTextColor = CyberPrimary,
                             unselectedIconColor = CyberMuted,
                             unselectedTextColor = CyberMuted,
-                            indicatorColor = CyberSurface.copy(alpha = 0.5f)
+                            indicatorColor = CyberPrimary
                         )
                     )
                 }
@@ -140,36 +168,111 @@ fun AuraAppScreen(viewModel: AuraViewModel = viewModel()) {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            // Proactive critical notification banner if suggestions exist
-            if (proactiveAlerts.isNotEmpty()) {
-                val systemAlert = proactiveAlerts.first()
-                Surface(
-                    color = CyberSurface.copy(alpha = 0.7f),
+            // Dynamic Proactive Card (SLA Premium Theme Block)
+            Surface(
+                color = Color(0xFFD3E4FF), // Soft light-blue background matching HTML template
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
+                shape = RoundedCornerShape(28.dp),
+                shadowElevation = 1.dp
+            ) {
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .border(1.dp, CyberSecondary.copy(alpha = 0.2f), RoundedCornerShape(12.dp)),
-                    shape = RoundedCornerShape(12.dp)
+                        .padding(20.dp)
                 ) {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            Icons.Default.BatteryAlert,
-                            contentDescription = "Alert",
-                            tint = CyberAccentAmber,
-                            modifier = Modifier.size(24.dp)
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Surface(
+                            color = Color.White.copy(alpha = 0.5f),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.size(36.dp)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    imageVector = Icons.Default.School,
+                                    contentDescription = "Proactive Badge",
+                                    tint = CyberPrimary,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            }
+                        }
+                        Surface(
+                            color = CyberPrimary,
+                            shape = RoundedCornerShape(100.dp)
+                        ) {
+                            Text(
+                                text = "Proactive",
+                                color = Color.White,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(14.dp))
+
+                    if (proactiveAlerts.isNotEmpty()) {
+                        val systemAlert = proactiveAlerts.first()
                         Text(
-                            text = systemAlert,
-                            color = CyberText,
+                            text = "Aura Smart Advice",
+                            fontSize = 17.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF001D35),
+                            lineHeight = 22.sp
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "\"$systemAlert\"",
                             fontSize = 13.sp,
-                            fontWeight = FontWeight.Medium,
-                            modifier = Modifier.weight(1f)
+                            style = androidx.compose.ui.text.TextStyle(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic),
+                            color = CyberMuted,
+                            lineHeight = 18.sp
+                        )
+                    } else {
+                        Text(
+                            text = "DBMS Exam in 5 days",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF001D35),
+                            lineHeight = 22.sp
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "\"I've blocked out 2 hours today for query optimization practice based on your weak areas.\"",
+                            fontSize = 13.sp,
+                            style = androidx.compose.ui.text.TextStyle(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic),
+                            color = CyberMuted,
+                            lineHeight = 18.sp
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(14.dp))
+
+                    Button(
+                        onClick = {
+                            if (proactiveAlerts.isNotEmpty()) {
+                                viewModel.sendMessage("Show me the details about your study suggestion.")
+                            } else {
+                                viewModel.sendMessage("Start Revision Session on SQL and query optimization")
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(44.dp),
+                        shape = RoundedCornerShape(100.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = CyberPrimary)
+                    ) {
+                        Text(
+                            text = "Start Revision Session",
+                            color = Color.White,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
@@ -272,7 +375,7 @@ fun AssistantDashboard(viewModel: AuraViewModel) {
                     text = "Aura Twin Core",
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    color = Color.White
+                    color = CyberText
                 )
                 Text(
                     text = "System Online • Fully Synchronized",
@@ -282,7 +385,7 @@ fun AssistantDashboard(viewModel: AuraViewModel) {
                 Text(
                     text = "Tip: Tap Aura to trigger proactive self-analysis.",
                     fontSize = 11.sp,
-                    color = CyberSecondary.copy(alpha = 0.8f)
+                    color = CyberPrimary
                 )
             }
         }
@@ -345,7 +448,7 @@ fun AssistantDashboard(viewModel: AuraViewModel) {
                                         Text(
                                             text = msg.text,
                                             fontSize = 13.sp,
-                                            color = Color.White
+                                            color = if (isUser) Color.White else CyberText
                                         )
                                     }
                                 }
@@ -402,12 +505,12 @@ fun AssistantDashboard(viewModel: AuraViewModel) {
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White,
+                            focusedTextColor = CyberText,
+                            unfocusedTextColor = CyberText,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent
                         ),
-                        textStyle = LocalTextStyle.current.copy(fontSize = 13.sp),
+                        textStyle = LocalTextStyle.current.copy(fontSize = 13.sp, color = CyberText),
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
                     )
 
@@ -439,7 +542,7 @@ fun AssistantDashboard(viewModel: AuraViewModel) {
             text = "Active Daily Reminders",
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp,
-            color = Color.White,
+            color = CyberText,
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
         )
 
@@ -460,11 +563,12 @@ fun AssistantDashboard(viewModel: AuraViewModel) {
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = CyberSurface,
                     unfocusedContainerColor = CyberSurface,
-                    focusedTextColor = Color.White,
+                    focusedTextColor = CyberText,
+                    unfocusedTextColor = CyberMuted,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
-                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = CyberText)
             )
 
             TextField(
@@ -476,11 +580,12 @@ fun AssistantDashboard(viewModel: AuraViewModel) {
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = CyberSurface,
                     unfocusedContainerColor = CyberSurface,
-                    focusedTextColor = Color.White,
+                    focusedTextColor = CyberText,
+                    unfocusedTextColor = CyberMuted,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
-                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = CyberText)
             )
 
             Button(
@@ -494,7 +599,7 @@ fun AssistantDashboard(viewModel: AuraViewModel) {
                 modifier = Modifier
                     .testTag("add_reminder_button")
                     .height(44.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = CyberSecondary)
+                colors = ButtonDefaults.buttonColors(containerColor = CyberPrimary, contentColor = Color.White)
             ) {
                 Text("+", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
@@ -528,14 +633,14 @@ fun AssistantDashboard(viewModel: AuraViewModel) {
                             Text(
                                 text = item.text,
                                 fontSize = 13.sp,
-                                color = if (item.isCompleted) CyberMuted else Color.White,
+                                color = if (item.isCompleted) CyberMuted else CyberText,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
                             Text(
                                 text = item.timeLabel,
                                 fontSize = 11.sp,
-                                color = CyberSecondary
+                                color = CyberPrimary
                             )
                         }
                         IconButton(
@@ -579,7 +684,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
             text = "AI Student Tutor",
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
-            color = Color.White,
+            color = CyberText,
             modifier = Modifier.padding(vertical = 12.dp)
         )
 
@@ -591,7 +696,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
             colors = CardDefaults.cardColors(containerColor = CyberSurface.copy(alpha = 0.5f))
         ) {
             Column(modifier = Modifier.padding(14.dp)) {
-                Text("Smart Tutor Explain Topic", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberSecondary)
+                Text("Smart Tutor Explain Topic", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberPrimary)
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
@@ -608,11 +713,12 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = CyberSurface,
                             unfocusedContainerColor = CyberSurface,
-                            focusedTextColor = Color.White,
+                            focusedTextColor = CyberText,
+                            unfocusedTextColor = CyberMuted,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent
                         ),
-                        textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                        textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = CyberText)
                     )
 
                     Button(
@@ -642,7 +748,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                         Text(
                             text = explainText,
                             fontSize = 12.sp,
-                            color = Color.White,
+                            color = CyberText,
                             modifier = Modifier.padding(10.dp)
                         )
                     }
@@ -658,7 +764,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
             colors = CardDefaults.cardColors(containerColor = CyberSurface)
         ) {
             Column(modifier = Modifier.padding(14.dp)) {
-                Text("Upload Notes & Generate Quiz/Cards", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberSecondary)
+                Text("Upload Notes & Generate Quiz/Cards", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberPrimary)
                 Spacer(modifier = Modifier.height(8.dp))
 
                 TextField(
@@ -667,8 +773,15 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                     placeholder = { Text("Title e.g. DBMS Indexes", fontSize = 12.sp, color = CyberMuted) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
-                    colors = TextFieldDefaults.colors(focusedContainerColor = CyberBackground, unfocusedContainerColor = CyberBackground, focusedTextColor = Color.White, focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent),
-                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = CyberBackground,
+                        unfocusedContainerColor = CyberBackground,
+                        focusedTextColor = CyberText,
+                        unfocusedTextColor = CyberMuted,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
+                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = CyberText)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -680,8 +793,15 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(110.dp),
-                    colors = TextFieldDefaults.colors(focusedContainerColor = CyberBackground, unfocusedContainerColor = CyberBackground, focusedTextColor = Color.White, focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent),
-                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = CyberBackground,
+                        unfocusedContainerColor = CyberBackground,
+                        focusedTextColor = CyberText,
+                        unfocusedTextColor = CyberMuted,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
+                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = CyberText)
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -698,7 +818,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                         .fillMaxWidth()
                         .testTag("add_note_button"),
                     enabled = !generatorLoading,
-                    colors = ButtonDefaults.buttonColors(containerColor = CyberSecondary)
+                    colors = ButtonDefaults.buttonColors(containerColor = CyberPrimary, contentColor = Color.White)
                 ) {
                     if (generatorLoading) {
                         CircularProgressIndicator(modifier = Modifier.size(18.dp), color = Color.White)
@@ -712,7 +832,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
         }
 
         // Notes Stack List
-        Text("Your Study Notes Library", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.White, modifier = Modifier.padding(vertical = 8.dp))
+        Text("Your Study Notes Library", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberText, modifier = Modifier.padding(vertical = 8.dp))
 
         if (notes.isEmpty()) {
             Text("No notes found. Enter title and study material above to generate AI content.", fontSize = 12.sp, color = CyberMuted, modifier = Modifier.padding(vertical = 12.dp))
@@ -726,15 +846,15 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                     .padding(vertical = 4.dp)
                     .clickable { viewModel.selectStudyNoteId(if (isSelected) null else note.id) },
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isSelected) CyberPrimary.copy(alpha = 0.2f) else CyberSurface
+                    containerColor = if (isSelected) CyberPrimary.copy(alpha = 0.08f) else CyberSurface
                 ),
                 border = BorderStroke(1.dp, if (isSelected) CyberPrimary else Color.Transparent)
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.MenuBook, contentDescription = null, tint = CyberSecondary, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.MenuBook, contentDescription = null, tint = CyberPrimary, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(note.title, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.White, modifier = Modifier.weight(1f))
+                        Text(note.title, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberText, modifier = Modifier.weight(1f))
                         IconButton(onClick = { viewModel.deleteStudyNote(note.id) }, modifier = Modifier.size(24.dp)) {
                             Icon(Icons.Default.Delete, contentDescription = "Delete", tint = CyberMuted, modifier = Modifier.size(16.dp))
                         }
@@ -747,7 +867,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                         Divider(color = CyberSurface, modifier = Modifier.padding(vertical = 8.dp))
 
                         // INTERACTIVE FLASHCARDS ROW
-                        Text("Flip Flashcards (Active recall)", fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = CyberSecondary)
+                        Text("Flip Flashcards (Active recall)", fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = CyberPrimary)
                         Spacer(modifier = Modifier.height(4.dp))
 
                         if (flashcardsList.isEmpty()) {
@@ -767,15 +887,15 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                                             .weight(1f)
                                             .height(85.dp)
                                             .clip(RoundedCornerShape(8.dp))
-                                            .background(if (flipped) CyberSecondary.copy(alpha = 0.15f) else CyberSurface)
-                                            .border(1.dp, if (card.mastered) CyberAccentGreen else CyberSurface)
+                                            .background(if (flipped) CyberSecondary.copy(alpha = 0.15f) else Color(0xFFF3F4F9))
+                                            .border(1.dp, if (card.mastered) CyberAccentGreen else Color(0xFFE1E2EC))
                                             .clickable { flipped = !flipped },
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
                                             text = if (flipped) card.back else card.front,
                                             fontSize = 11.sp,
-                                            color = if (flipped) CyberSecondary else Color.White,
+                                            color = if (flipped) CyberPrimary else CyberText,
                                             textAlign = TextAlign.Center,
                                             modifier = Modifier.padding(4.dp),
                                             fontWeight = FontWeight.Medium
@@ -799,7 +919,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
 
                         // INTERACTIVE QUIZZES DECK
                         Spacer(modifier = Modifier.height(10.dp))
-                        Text("Play Generated Quiz", fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = CyberSecondary)
+                        Text("Play Generated Quiz", fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = CyberPrimary)
 
                         if (quizzesList.isEmpty()) {
                             Text("No quiz generated.", fontSize = 11.sp, color = CyberMuted)
@@ -813,7 +933,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                                         .fillMaxWidth()
                                         .padding(vertical = 4.dp)
                                 ) {
-                                    Text("${qIdx + 1}. ${quiz.question}", fontSize = 12.sp, fontWeight = FontWeight.Medium, color = Color.White)
+                                    Text("${qIdx + 1}. ${quiz.question}", fontSize = 12.sp, fontWeight = FontWeight.Medium, color = CyberText)
                                     Spacer(modifier = Modifier.height(6.dp))
 
                                     optionsList.forEach { opt ->
@@ -829,10 +949,10 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                                         }
 
                                         val blockBorder = when {
-                                            selectedAns.isEmpty() -> BorderStroke(1.dp, CyberSurface)
+                                            selectedAns.isEmpty() -> BorderStroke(1.dp, Color(0xFFE1E2EC))
                                             isCorrect -> BorderStroke(1.dp, CyberAccentGreen)
                                             isChosen && !isCorrect -> BorderStroke(1.dp, CyberTertiary)
-                                            else -> BorderStroke(1.dp, CyberSurface)
+                                            else -> BorderStroke(1.dp, Color(0xFFE1E2EC))
                                         }
 
                                         Surface(
@@ -849,7 +969,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                                             Text(
                                                 trimmedOpt,
                                                 fontSize = 11.sp,
-                                                color = Color.White,
+                                                color = CyberText,
                                                 modifier = Modifier.padding(10.dp)
                                             )
                                         }
@@ -859,7 +979,7 @@ fun StudyCompanionTab(viewModel: AuraViewModel) {
                                         Text(
                                             text = "Aura Feedback: " + (if (selectedAns.equals(quiz.answer.trim(), ignoreCase = true)) "Correct! " else "Incorrect. Correct is: ${quiz.answer}. ") + quiz.explanation,
                                             fontSize = 10.sp,
-                                            color = CyberSecondary,
+                                            color = CyberPrimary,
                                             modifier = Modifier.padding(top = 4.dp, bottom = 8.dp)
                                         )
                                     }
@@ -897,7 +1017,7 @@ fun DigitalTwinTab(viewModel: AuraViewModel) {
             text = "Digital Twin & Persona",
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
-            color = Color.White,
+            color = CyberText,
             modifier = Modifier.padding(vertical = 12.dp)
         )
 
@@ -911,7 +1031,7 @@ fun DigitalTwinTab(viewModel: AuraViewModel) {
                     "Aura AI Learnt Contexts (Real Memory)",
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    color = CyberSecondary
+                    color = CyberPrimary
                 )
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -942,9 +1062,9 @@ fun DigitalTwinTab(viewModel: AuraViewModel) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(readableName, fontWeight = FontWeight.Bold, fontSize = 12.sp, color = CyberSecondary)
+                                Text(readableName, fontWeight = FontWeight.Bold, fontSize = 12.sp, color = CyberPrimary)
                                 Spacer(modifier = Modifier.height(4.dp))
-                                Text(memory.value, fontSize = 12.sp, color = Color.White)
+                                Text(memory.value, fontSize = 12.sp, color = CyberText)
                             }
                             Icon(Icons.Default.Edit, contentDescription = "Edit", tint = CyberMuted, modifier = Modifier.size(16.dp))
                         }
@@ -965,7 +1085,7 @@ fun DigitalTwinTab(viewModel: AuraViewModel) {
                     "Twin Writer: Emulated Social Drafts",
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    color = CyberSecondary
+                    color = CyberPrimary
                 )
                 Text(
                     "Aura writes exact personal copies adhering strictly to your writing style.",
@@ -991,7 +1111,7 @@ fun DigitalTwinTab(viewModel: AuraViewModel) {
                             border = BorderStroke(1.dp, if (isSelected) CyberPrimary else CyberSurface)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
-                                Text(channel, fontSize = 12.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
+                                Text(channel, fontSize = 12.sp, color = if (isSelected) Color.White else CyberText, fontWeight = FontWeight.SemiBold)
                             }
                         }
                     }
@@ -1009,11 +1129,12 @@ fun DigitalTwinTab(viewModel: AuraViewModel) {
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = CyberBackground,
                         unfocusedContainerColor = CyberBackground,
-                        focusedTextColor = Color.White,
+                        focusedTextColor = CyberText,
+                        unfocusedTextColor = CyberMuted,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
-                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = CyberText)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -1028,7 +1149,7 @@ fun DigitalTwinTab(viewModel: AuraViewModel) {
                         .fillMaxWidth()
                         .testTag("generate_twin_draft_button"),
                     enabled = !draftLoading,
-                    colors = ButtonDefaults.buttonColors(containerColor = CyberSecondary)
+                    colors = ButtonDefaults.buttonColors(containerColor = CyberPrimary, contentColor = Color.White)
                 ) {
                     if (draftLoading) {
                         CircularProgressIndicator(modifier = Modifier.size(16.dp), color = Color.White)
@@ -1041,7 +1162,7 @@ fun DigitalTwinTab(viewModel: AuraViewModel) {
 
                 if (draftOutput.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text("Generated Draft Copy", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = CyberSecondary)
+                    Text("Generated Draft Copy", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = CyberPrimary)
                     Surface(
                         color = CyberBackground,
                         shape = RoundedCornerShape(8.dp),
@@ -1053,7 +1174,7 @@ fun DigitalTwinTab(viewModel: AuraViewModel) {
                         Text(
                             text = draftOutput,
                             fontSize = 12.sp,
-                            color = Color.White,
+                            color = CyberText,
                             modifier = Modifier.padding(12.dp)
                         )
                     }
@@ -1133,7 +1254,7 @@ fun MoodTab(viewModel: AuraViewModel) {
             text = "Mood Tracker & Well-being",
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
-            color = Color.White,
+            color = CyberText,
             modifier = Modifier.padding(vertical = 12.dp)
         )
 
@@ -1143,7 +1264,7 @@ fun MoodTab(viewModel: AuraViewModel) {
             colors = CardDefaults.cardColors(containerColor = CyberSurface.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("How are you feeling right now?", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.White)
+                Text("How are you feeling right now?", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberText)
                 
                 Spacer(modifier = Modifier.height(12.dp))
 
@@ -1176,12 +1297,12 @@ fun MoodTab(viewModel: AuraViewModel) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Icon(Icons.Default.Mic, contentDescription = "Voice input", tint = if (mockWaveTrigger) CyberSecondary else CyberMuted, modifier = Modifier.size(16.dp))
+                    Icon(Icons.Default.Mic, contentDescription = "Voice input", tint = if (mockWaveTrigger) CyberPrimary else CyberMuted, modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = if (mockWaveTrigger) "Voice mood scanning in progress..." else "Tap to trigger Voice Sentiment analysis",
                         fontSize = 11.sp,
-                        color = if (mockWaveTrigger) CyberSecondary else CyberMuted
+                        color = if (mockWaveTrigger) CyberPrimary else CyberMuted
                     )
                 }
 
@@ -1196,7 +1317,7 @@ fun MoodTab(viewModel: AuraViewModel) {
                         for (i in 0..15) {
                             val h = sin((i + waveHeight) * 0.9f) * 15f
                             drawLine(
-                                color = CyberSecondary,
+                                color = CyberPrimary,
                                 start = Offset(x = i * 25f + 100f, y = 12.5f - h / 2),
                                 end = Offset(x = i * 25f + 100f, y = 12.5f + h / 2),
                                 strokeWidth = 3.dp.toPx()
@@ -1217,11 +1338,12 @@ fun MoodTab(viewModel: AuraViewModel) {
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = CyberBackground,
                         unfocusedContainerColor = CyberBackground,
-                        focusedTextColor = Color.White,
+                        focusedTextColor = CyberText,
+                        unfocusedTextColor = CyberMuted,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
-                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = CyberText)
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -1237,7 +1359,7 @@ fun MoodTab(viewModel: AuraViewModel) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag("save_mood_button"),
-                    colors = ButtonDefaults.buttonColors(containerColor = CyberSecondary)
+                    colors = ButtonDefaults.buttonColors(containerColor = CyberPrimary, contentColor = Color.White)
                 ) {
                     Text("Log Mood and Check In")
                 }
@@ -1254,7 +1376,7 @@ fun MoodTab(viewModel: AuraViewModel) {
                 else -> listOf("🧘 Grounding Breathing", "🎵 Ambient Music")
             }
 
-            Text("Aura AI Generated Activity suggestions", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.White, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+            Text("Aura AI Generated Activity suggestions", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberText, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
             Row(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -1264,19 +1386,19 @@ fun MoodTab(viewModel: AuraViewModel) {
                         modifier = Modifier
                             .weight(1f)
                             .clip(RoundedCornerShape(8.dp))
-                            .background(CyberSurface)
-                            .border(1.dp, CyberSecondary.copy(alpha = 0.3f))
+                            .background(Color(0xFFF3F4F9))
+                            .border(1.dp, Color(0xFFE1E2EC))
                             .padding(8.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(chip, fontSize = 10.sp, color = Color.White, textAlign = TextAlign.Center, maxLines = 2, fontWeight = FontWeight.Medium)
+                        Text(chip, fontSize = 10.sp, color = CyberText, textAlign = TextAlign.Center, maxLines = 2, fontWeight = FontWeight.Medium)
                     }
                 }
             }
         }
 
         // Logs History
-        Text("Mood History & Well-being Cards", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.White, modifier = Modifier.padding(vertical = 8.dp))
+        Text("Mood History & Well-being Cards", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberText, modifier = Modifier.padding(vertical = 8.dp))
         moodHistory.forEach { mLog ->
             val emoji = when (mLog.feelingScore) {
                 1 -> "😭"
@@ -1289,12 +1411,13 @@ fun MoodTab(viewModel: AuraViewModel) {
             Surface(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                 shape = RoundedCornerShape(10.dp),
-                color = CyberSurface
+                color = CyberSurface,
+                border = BorderStroke(1.dp, Color(0xFFE1E2EC))
             ) {
                 Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(emoji, fontSize = 24.sp, modifier = Modifier.padding(end = 12.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(mLog.journalText, fontSize = 12.sp, color = Color.White)
+                        Text(mLog.journalText, fontSize = 12.sp, color = CyberText)
                         val dateString = SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault()).format(Date(mLog.timestamp))
                         Text(dateString, fontSize = 10.sp, color = CyberMuted, modifier = Modifier.padding(top = 4.dp))
                     }
@@ -1325,7 +1448,7 @@ fun HabitsTab(viewModel: AuraViewModel) {
             text = "AI Adaptive Habit Builder",
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
-            color = Color.White,
+            color = CyberText,
             modifier = Modifier.padding(vertical = 12.dp)
         )
 
@@ -1335,7 +1458,7 @@ fun HabitsTab(viewModel: AuraViewModel) {
             colors = CardDefaults.cardColors(containerColor = CyberSurface.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(14.dp)) {
-                Text("Create new Habit Challenge", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberSecondary)
+                Text("Create new Habit Challenge", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberPrimary)
                 Spacer(modifier = Modifier.height(10.dp))
 
                 TextField(
@@ -1347,11 +1470,12 @@ fun HabitsTab(viewModel: AuraViewModel) {
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = CyberBackground,
                         unfocusedContainerColor = CyberBackground,
-                        focusedTextColor = Color.White,
+                        focusedTextColor = CyberText,
+                        unfocusedTextColor = CyberMuted,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
-                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                    textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = CyberText)
                 )
 
                 // Category selector Row
@@ -1369,14 +1493,14 @@ fun HabitsTab(viewModel: AuraViewModel) {
                                 .height(32.dp)
                                 .clickable { habitCategory = cat },
                             shape = RoundedCornerShape(8.dp),
-                            color = if (selected) CyberSecondary else CyberBackground,
-                            border = BorderStroke(1.dp, if (selected) CyberSecondary else CyberSurface)
+                            color = if (selected) CyberPrimary else CyberBackground,
+                            border = BorderStroke(1.dp, if (selected) CyberPrimary else Color(0xFFE1E2EC))
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Text(
                                     cat,
                                     fontSize = 10.sp,
-                                    color = if (selected) CyberBackground else Color.White,
+                                    color = if (selected) Color.White else CyberText,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -1395,11 +1519,12 @@ fun HabitsTab(viewModel: AuraViewModel) {
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = CyberBackground,
                             unfocusedContainerColor = CyberBackground,
-                            focusedTextColor = Color.White,
+                            focusedTextColor = CyberText,
+                            unfocusedTextColor = CyberMuted,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent
                         ),
-                        textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                        textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = CyberText)
                     )
                 }
 
@@ -1417,7 +1542,7 @@ fun HabitsTab(viewModel: AuraViewModel) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag("add_habit_button"),
-                    colors = ButtonDefaults.buttonColors(containerColor = CyberSecondary)
+                    colors = ButtonDefaults.buttonColors(containerColor = CyberPrimary, contentColor = Color.White)
                 ) {
                     Text("Lock Challenge Streak", fontSize = 12.sp)
                 }
@@ -1425,7 +1550,7 @@ fun HabitsTab(viewModel: AuraViewModel) {
         }
 
         // Active list Deck
-        Text("Routine Challenges (Gamified Streaks)", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.White, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+        Text("Routine Challenges (Gamified Streaks)", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = CyberText, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
 
         habitsList.forEach { hItem ->
             val isAppLimit = hItem.category == "App Limit"
@@ -1433,23 +1558,24 @@ fun HabitsTab(viewModel: AuraViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                colors = CardDefaults.cardColors(containerColor = CyberSurface)
+                colors = CardDefaults.cardColors(containerColor = CyberSurface),
+                border = BorderStroke(1.dp, Color(0xFFE1E2EC))
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Surface(
                             modifier = Modifier.size(8.dp),
                             color = when (hItem.category) {
-                                "Study" -> CyberSecondary
+                                "Study" -> CyberPrimary
                                 "Health" -> CyberAccentGreen
                                 "App Limit" -> CyberTertiary
                                 "Personal" -> CyberAccentAmber
-                                else -> Color.White
+                                else -> CyberSecondary
                             },
                             shape = CircleShape
                         ) {}
                         Spacer(modifier = Modifier.width(10.dp))
-                        Text(hItem.name, fontWeight = FontWeight.Bold, fontSize = 13.sp, color = Color.White, modifier = Modifier.weight(1f))
+                        Text(hItem.name, fontWeight = FontWeight.Bold, fontSize = 13.sp, color = CyberText, modifier = Modifier.weight(1f))
                         Text("🔥 ${hItem.streak} day streak", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = CyberAccentAmber)
                     }
 
@@ -1470,7 +1596,7 @@ fun HabitsTab(viewModel: AuraViewModel) {
                                     .weight(1f)
                                     .height(6.dp)
                                     .clip(RoundedCornerShape(3.dp)),
-                                color = CyberSecondary,
+                                color = CyberPrimary,
                                 trackColor = CyberBackground
                             )
                             Spacer(modifier = Modifier.width(12.dp))
@@ -1503,7 +1629,7 @@ fun HabitsTab(viewModel: AuraViewModel) {
                             Spacer(modifier = Modifier.width(6.dp))
                             Button(
                                 onClick = { viewModel.checkInHabit(hItem) },
-                                colors = ButtonDefaults.buttonColors(containerColor = CyberSecondary.copy(alpha = 0.2f), contentColor = CyberSecondary),
+                                colors = ButtonDefaults.buttonColors(containerColor = CyberPrimary.copy(alpha = 0.08f), contentColor = CyberPrimary),
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier.height(30.dp)
                             ) {

@@ -8,19 +8,25 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
+private val ProfessionalPolishColorScheme = lightColorScheme(
     primary = CyberPrimary,
+    onPrimary = Color.White,
+    primaryContainer = CyberSecondary,
+    onPrimaryContainer = Color(0xFF001D35),
     secondary = CyberSecondary,
+    onSecondary = Color(0xFF001D35),
+    secondaryContainer = Color(0xFFE1E2EC),
+    onSecondaryContainer = Color(0xFF191C1E),
     tertiary = CyberTertiary,
+    onTertiary = Color(0xFF43474E),
     background = CyberBackground,
-    surface = CyberSurface,
-    onPrimary = CyberText,
-    onSecondary = CyberBackground,
-    onTertiary = CyberBackground,
     onBackground = CyberText,
-    onSurface = CyberText
+    surface = CyberSurface,
+    onSurface = CyberText,
+    outline = Color(0xFFC4C6D0)
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -40,8 +46,7 @@ fun MyApplicationTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        darkTheme -> DarkColorScheme
-        else -> DarkColorScheme // Force dark-theme for the luxury "Aura Cosmic" vibe!
+        else -> ProfessionalPolishColorScheme // Force Professional Polish light theme for elegance!
     }
 
     MaterialTheme(
